@@ -81,34 +81,53 @@
                                     </div>
                                     <?php  }
 
-                            echo "</table>";
+                         
                         } else {
                             echo "<p>No rooms found.</p>";
                         }
 
-                    }  ?>
+                    } else{ 
 
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="img/rom1.jpg" class="card-img-top img-fluid" alt="Room 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Deluxe Room</h5>
-                            <p class="card-text">Spacious and luxurious room with a view.</p>
-                            <a href="#" class="btn btn-primary">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="img/rom1.jpg" class="card-img-top img-fluid" alt="Room 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Deluxe Room</h5>
-                            <p class="card-text">Spacious and luxurious room with a view.</p>
-                            <a href="#" class="btn btn-primary">Book Now</a>
-                        </div>
-                    </div>
-                </div>
 
+                           $sql = "SELECT room_details.room_number, typeroom.room_type, room.price, room.amenities, hotel.name
+                                FROM room_details
+                                INNER JOIN room ON room_details.room_id = room.room_id
+                                INNER JOIN hotel ON room.hotel_id = hotel.hotel_id
+                                INNER JOIN typeroom ON room.roomtype_id = typeroom.roomtype_id
+                                INNER JOIN localisation ON hotel.location_id = localisation.location_id";
+                
+
+                        $result =mysqli_query($conn,$sql);
+
+                        if (mysqli_num_rows($result) > 0) {
+                        
+
+                            while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <img src="img/rom1.jpg" class="card-img-top img-fluid" alt="Room 1">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><?=$row["room_type"] ?> : <?=$row["room_number"]?></h5>
+                                                <p class="card-text"><?=$row["amenities"] ?></p>
+                                                <p class="card-text"><?=$row["name"] ?></p>
+                                                <p class="card-text"><?=$row["price"] ?></p>
+                                                <a href="#" class="btn btn-primary">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php  }
+
+                         
+                        } else {
+                            echo "<p>No rooms found.</p>";
+                        }
+
+
+
+
+                    } ?>
+
+             
 
 
             </div>
