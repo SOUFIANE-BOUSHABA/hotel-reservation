@@ -15,9 +15,41 @@ if (isset($_POST['checkAv'])) {
 
     if ($res) {
         if (mysqli_num_rows($res) == 0) {
-            echo "Room is available for the specified dates. You can  booking.";
+            echo "<script>
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-start',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'room is avilable in this date'
+                    });
+             </script>";
         } else {
-            echo "Sorry, the room is not available for the specified dates. Please choose different dates.";
+            echo "<script>
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-start',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'sorry, rom not avilable'
+                        });
+             </script>";
         }
     } else {
         echo "Error: " . mysqli_error($conn);
@@ -70,19 +102,20 @@ if (isset($_POST['checkAv'])) {
 
                 <div class="col-md-12 ">
                     <div class="card ">
-                       
+
                         <div class="card-body d-flex gap-4">
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="img/rom1.jpg" class="card-img " alt="Room 1">
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="img/rom1.jpg" class="card-img " alt="Room 1">
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <h5 class="card-title"><?= $row["room_type"] ?> : <?= $row["room_number"] ?></h5>
-                            <p class="card-text"><?= $row["amenities"] ?></p>
-                            <p class="card-text"><?= $row["name"] ?></p>
-                            <p class="card-text"><?= $row["price"] ?></p>
-                            <a href="#" class="btn btn-primary">Book Now</a></div>
+                            <div>
+                                <h5 class="card-title"><?= $row["room_type"] ?> : <?= $row["room_number"] ?></h5>
+                                <p class="card-text"><?= $row["amenities"] ?></p>
+                                <p class="card-text"><?= $row["name"] ?></p>
+                                <p class="card-text"><?= $row["price"] ?></p>
+                                <a href="#" class="btn btn-primary">Book Now</a>
+                            </div>
                         </div>
                     </div>
                 </div>
