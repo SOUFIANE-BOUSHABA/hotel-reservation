@@ -83,7 +83,7 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2){
                     <tbody>
                         <?php 
                         $userId = $_SESSION['user_id'];
-                        $sql = "SELECT room_details.room_number, typeroom.room_type, hotel.name 
+                        $sql = "SELECT *
                                 FROM room_details
                                 JOIN room ON room_details.room_id = room.room_id
                                 JOIN typeroom ON room.roomtype_id = typeroom.roomtype_id
@@ -100,8 +100,64 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2){
                                     <td><?= $row['name'] ?></td>
                                     <td>
                                         <a type="button" class="btn btn-danger">Delete</a>
-                                        <a type="button" class="btn btn-warning">Update</a>
+                                        <a type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $row['room_detail_id'] ?>">Update</a>
                                     </td>
+
+                                    <div class="modal fade" id="exampleModal<?= $row['room_detail_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">update Room</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="../logique/updateroom.php" method="post">
+                                    <div class="mb-3">
+                                        <label for="roomNumber" class="form-label">Room Number:</label>
+                                        <input type="text" class="form-control" id="roomNumber" value="<?= $row['room_number'] ?>" name="roomNumber" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="roomNumber" class="form-label">price :</label>
+                                        <input type="text" class="form-control" value="<?= $row['price'] ?>" id="roomNumber" name="prix" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="roomNumber" class="form-label">amenties :</label>
+                                        <input type="text" class="form-control" value="<?= $row['amenities'] ?>" id="roomNumber" name="amentic" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="roomType" class="form-label">Room Type:</label>
+                                        <select class="form-select" id="roomType" name="roomType" required>
+                                        <?php
+                                            $id=$_SESSION['user_id'];
+                                            $typeSql = "SELECT * FROM typeroom " ;
+                                            $res = mysqli_query($conn, $typeSql);
+                                            while ($row = mysqli_fetch_assoc($res)) {
+                                                echo "<option value='{$row['roomtype_id']}'>{$row['room_type']}</option>";
+                                            } ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="hotelId" class="form-label">Select Hotel:</label>
+                                        <select class="form-select" id="hotelId" name="hotelId" required>
+                                            <?php
+                                            $id=$_SESSION['user_id'];
+                                            $hotelSql = "SELECT hotel_id, name FROM hotel where user_id = $id" ;
+                                            $res = mysqli_query($conn, $hotelSql);
+                                            while ($row = mysqli_fetch_assoc($res)) {
+                                                echo "<option value='{$row['hotel_id']}'>{$row['name']}</option>";
+                                            } ?>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" name="insertroom" class="btn btn-primary">Add Room</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                                 </tr>
                         <?php }}?>
                     </tbody>
