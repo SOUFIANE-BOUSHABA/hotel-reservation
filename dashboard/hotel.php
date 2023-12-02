@@ -3,6 +3,9 @@ include 'header.php';
 if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_id']!=2){
   header('location:../login.php');
 }
+
+
+
 ?>
 
 <div class="container-fluid">
@@ -23,7 +26,7 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_i
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">add hotel</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -95,12 +98,61 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_i
                             </td>
                             <td>
 
-                                <a type="button" class="btn btn-danger">Supreme</a>
+                                <a type="button" class="btn btn-danger">delete</a>
                                
-                                <a type="button" class="btn btn-warning" >update</a>
+                                <a type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<?=$row['hotel_id']?>">update</a>
 
                             </td>
                             
+                            <div class="modal fade" id="exampleModal<?=$row['hotel_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">update hotel</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="modal-body">
+                                    <form action="../logique/updatehotel.php" method="post" >
+                                    <input type="hidden" class="form-control" value="<?=$row['hotel_id']?>" id="name" name="id_hotel" required>
+                                    <input type="hidden" class="form-control" value="<?=$row['location_id']?>" id="name" name="id_location" required>
+
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Name:</label>
+                                            <input type="text" class="form-control" value="<?=$row['name']?>" id="name" name="name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="contactNumber" class="form-label">Contact Number:</label>
+                                            <input type="tel" class="form-control" id="contactNumber" value="<?=$row['contact_number']?>"
+                                                name="contactNumber" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="amenities" class="form-label">Amenities:</label>
+                                            <input type="text" class="form-control" id="amenities" name="amenities"
+                                               value="<?=$row['amenities']?>"  required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="pays" class="form-label">Pays:</label>
+                                            <input type="text" class="form-control" id="pays" value="<?=$row['pays']?>"
+                                             name="pays" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="ville" class="form-label">Ville:</label>
+                                            <input type="text" class="form-control" id="ville" value="<?=$row['ville']?>"
+                                             name="ville" required>
+                                        </div>
+                                        <button type="submit" name="updatehotel" class="btn btn-primary">update hotel</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
                         </tr> 
                       
                         

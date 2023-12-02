@@ -13,7 +13,7 @@ if(isset($_POST['inserthotel'])){
 
     if ($result) {
         $locationId = mysqli_insert_id($conn);
-    $id=$_SESSION['user_id'];
+         $id=$_SESSION['user_id'];
         $inserthotel = "INSERT INTO hotel (`hotel_id`, `location_id`, `name`, `contact_number`, `amenities`, `user_id`) VALUES ( null , $locationId, '$hotelName', '$contactNumber', '$amenities','$id')";
         $resultHotel = mysqli_query($conn, $inserthotel);
 
