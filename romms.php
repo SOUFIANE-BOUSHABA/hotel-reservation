@@ -62,7 +62,7 @@
                                                 <h5 class="card-title"><?=$row["room_type"] ?> : <?=$row["room_number"]?></h5>
                                                 <p class="card-text"><?=$row["amenities"] ?></p>
                                                 <p class="card-text"><?=$row["name"] ?></p>
-                                                <p class="card-text"><?=$row["price"] ?></p>
+                                                <p class="card-text"><?=$row["price"] ?> dh  par nuit</p>
                                                 <a href="#" class="btn btn-primary">Book Now</a>
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@
                                                 <h5 class="card-title"><?=$row["room_type"] ?> : <?=$row["room_number"]?></h5>
                                                 <p class="card-text"><?=$row["amenities"] ?></p>
                                                 <p class="card-text"><?=$row["name"] ?></p>
-                                                <p class="card-text"><?=$row["price"] ?> $</p>
+                                                <p class="card-text"><?=$row["price"] ?> dh par nuits</p>
                                                 <a href="romm-detail.php?room_id=<?=$row['room_detail_id']?>" class="btn btn-primary">Book Now</a>
                                             </div>
                                         </div>
