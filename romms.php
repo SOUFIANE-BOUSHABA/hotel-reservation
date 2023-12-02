@@ -89,7 +89,7 @@
                     } else{ 
 
 
-                           $sql = "SELECT room_details.room_number, typeroom.room_type, room.price, room.amenities, hotel.name
+                           $sql = "SELECT room_details.room_detail_id, room_details.room_number, typeroom.room_type, room.price, room.amenities, hotel.name
                                 FROM room_details
                                 INNER JOIN room ON room_details.room_id = room.room_id
                                 INNER JOIN hotel ON room.hotel_id = hotel.hotel_id
@@ -111,7 +111,7 @@
                                                 <p class="card-text"><?=$row["amenities"] ?></p>
                                                 <p class="card-text"><?=$row["name"] ?></p>
                                                 <p class="card-text"><?=$row["price"] ?></p>
-                                                <a href="#" class="btn btn-primary">Book Now</a>
+                                                <a href="romm-detail.php?room_id=<?=$row['room_detail_id']?>" class="btn btn-primary">Book Now</a>
                                             </div>
                                         </div>
                                     </div>
