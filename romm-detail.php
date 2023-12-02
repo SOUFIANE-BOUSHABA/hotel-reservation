@@ -63,7 +63,7 @@ if (isset($_POST['checkAv'])) {
     <div class="row">
 
         <div class="col-md-3">
-            <div style="position: sticky; top:70px; box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);">
+            <div style="position: sticky; top:70px;">
                 <div style="height:70px"></div>
                 <h4>Check Availability</h4>
 
