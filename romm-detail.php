@@ -2,19 +2,26 @@
  $roomId = $_GET['room_id'];
 
 
+
+ 
 if (isset($_POST['checkAv'])) {
-    $room_id = $_POST["room_id"];
-    $start_date = $_POST["startDate"];
+    $room_id =  $_GET['room_id'];
+    $startdate = $_POST["startDate"];
     $enddate = $_POST["endDate"];
 
+    if (strtotime($startdate) > strtotime($enddate)) {
+        echo "End date should be after start date.";
+        exit;
+    }
+
     $sql = "SELECT * FROM reservation 
-                           WHERE room_detail_id IN (SELECT room_detail_id FROM room_details WHERE room_id = $room_id) 
-                           AND (('$start_date' BETWEEN start_date AND end_date) OR ('$enddate' BETWEEN start_date AND end_date))";
+                           WHERE room_detail_id IN (SELECT room_detail_id FROM room_details WHERE room_detail_id = $room_id) 
+                           AND (('$startdate' BETWEEN start_date AND end_date) OR ('$enddate' BETWEEN start_date AND end_date))";
 
     $res = mysqli_query($conn, $sql);
 
     if ($res) {
-        if (mysqli_num_rows($res) === 0) {
+        if (mysqli_num_rows($res) < 1) {
             echo "<script>
                     const Toast = Swal.mixin({
                         toast: true,
@@ -57,6 +64,7 @@ if (isset($_POST['checkAv'])) {
 }
 
 
+
 if (isset($_POST['book'])) {
 
     if (!isset($_SESSION['user_id'])) {
@@ -65,7 +73,7 @@ if (isset($_POST['book'])) {
 
     $user_id = $_SESSION['user_id'];
 
-    $room_id = $_POST["room_id"];
+    $room_id =  $_POST['room_id'];
     $start_date = $_POST["startDate"];
     $end_date = $_POST["endDate"];
     $prix = $_POST['price'];
@@ -75,21 +83,28 @@ if (isset($_POST['book'])) {
         exit;
     }
 
+    $start = new DateTime($start_date);
+    $end = new DateTime($end_date);
+    $interval = $start->diff($end);
+    $totaljour = $interval->format('%a');
+    $total_prix = $prix * $totaljour;
+
+
     $sql1 = "SELECT * FROM reservation 
-                       WHERE room_detail_id IN (SELECT room_detail_id FROM room_details WHERE room_id = $room_id) 
+                       WHERE room_detail_id IN (SELECT room_detail_id FROM room_details WHERE room_detail_id = $room_id) 
                        AND (('$start_date' BETWEEN start_date AND end_date) OR ('$end_date' BETWEEN start_date AND end_date))";
 
     $res1 = mysqli_query($conn, $sql1);
 
     if ($res1 && mysqli_num_rows($res1) === 0) {
         $sql2 = "INSERT INTO reservation (user_id, start_date, end_date, total_cost, room_detail_id)
-              VALUES ($user_id, '$start_date', '$end_date', '$prix', $room_id)";
+              VALUES ($user_id, '$start_date', '$end_date', '$total_prix', $room_id)";
 
         $res2 = mysqli_query($conn, $sql2);
 
         if ($res2) {
             $sql3 = "INSERT INTO invoice (reservation_id, issue_date, amount_due, status)
-            VALUES (LAST_INSERT_ID(), CURDATE(), '$prix', 'Unpaid')";
+            VALUES (LAST_INSERT_ID(), CURDATE(), '$total_prix', 'Unpaid')";
 
             $res3 = mysqli_query($conn, $sql3);
 
@@ -137,9 +152,6 @@ if (isset($_POST['book'])) {
              </script>";
     }
 }
-
-
-
 ?>
 
 <div class="container">
@@ -213,10 +225,9 @@ if (isset($_POST['book'])) {
 
                                                         <h4>periode</h4>
 
-                                                        <form class="mb-3" method="post" action="">
-                                                            <input type="hidden" name="room_id"
-                                                                value="<?php echo $roomId; ?>">
-                                                                <input type="hidden" name="price" value="<?= $row["price"] ?>" >
+                                                        <form class="mb-3" method="post" >
+                                                            <input type="hidden" name="room_id"  value="<?= $roomId; ?>">
+                                                            <input type="hidden" name="price" value="<?= $row["price"] ?>" >
                                                             <div class="mb-3">
                                                                 <label for="startDate" class="form-label">Start
                                                                     Date</label>
@@ -257,3 +268,9 @@ if (isset($_POST['book'])) {
 </body>
 
 </html>
+
+<?php
+
+
+
+?>
