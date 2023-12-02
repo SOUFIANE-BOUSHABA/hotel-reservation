@@ -27,18 +27,6 @@
             </form>
 
 
-            <!-- <form>
-                <div class="mb-3">
-                    <label for="startDate" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="startDate">
-                </div>
-                <div class="mb-3">
-                    <label for="endDate" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="endDate">
-                </div>
-                <button type="submit" class="btn btn-primary">Filter by Start and End Date</button>
-            </form> -->
-
         </div>
 
 
@@ -110,7 +98,7 @@
                                                 <h5 class="card-title"><?=$row["room_type"] ?> : <?=$row["room_number"]?></h5>
                                                 <p class="card-text"><?=$row["amenities"] ?></p>
                                                 <p class="card-text"><?=$row["name"] ?></p>
-                                                <p class="card-text"><?=$row["price"] ?></p>
+                                                <p class="card-text"><?=$row["price"] ?> $</p>
                                                 <a href="romm-detail.php?room_id=<?=$row['room_detail_id']?>" class="btn btn-primary">Book Now</a>
                                             </div>
                                         </div>
