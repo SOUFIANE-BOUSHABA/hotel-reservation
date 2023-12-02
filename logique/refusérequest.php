@@ -1,6 +1,6 @@
 <?php
 
-include '../connexion.php';
+include '../cnxDB.php';
 
 
 if (isset($_GET['id'])) {

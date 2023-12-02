@@ -25,8 +25,48 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2){
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                               
+                                <form action="../logique/addroom.php" method="post">
+                                    <div class="mb-3">
+                                        <label for="roomNumber" class="form-label">Room Number:</label>
+                                        <input type="text" class="form-control" id="roomNumber" name="roomNumber" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="roomNumber" class="form-label">price :</label>
+                                        <input type="text" class="form-control" id="roomNumber" name="prix" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="roomNumber" class="form-label">amenties :</label>
+                                        <input type="text" class="form-control" id="roomNumber" name="amentic" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="roomType" class="form-label">Room Type:</label>
+                                        <select class="form-select" id="roomType" name="roomType" required>
+                                        <?php
+                                            $id=$_SESSION['user_id'];
+                                            $typeSql = "SELECT * FROM typeroom " ;
+                                            $res = mysqli_query($conn, $typeSql);
+                                            while ($row = mysqli_fetch_assoc($res)) {
+                                                echo "<option value='{$row['roomtype_id']}'>{$row['room_type']}</option>";
+                                            } ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="hotelId" class="form-label">Select Hotel:</label>
+                                        <select class="form-select" id="hotelId" name="hotelId" required>
+                                            <?php
+                                            $id=$_SESSION['user_id'];
+                                            $hotelSql = "SELECT hotel_id, name FROM hotel where user_id = $id" ;
+                                            $res = mysqli_query($conn, $hotelSql);
+                                            while ($row = mysqli_fetch_assoc($res)) {
+                                                echo "<option value='{$row['hotel_id']}'>{$row['name']}</option>";
+                                            } ?>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" name="insertroom" class="btn btn-primary">Add Room</button>
+                                </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
