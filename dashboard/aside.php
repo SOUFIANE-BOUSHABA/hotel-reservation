@@ -9,7 +9,12 @@
                     <?php } if( $_SESSION['role_id'] == 2  ){?>
                     <li><a href="hotel.php">hotels</a></li>
                     <li><a href="romms.php">romms</a></li>
+                    <li><a href="reservation.php">reservations</a></li>
                     <li><a href="requestresponsable.php">request</a></li>
+                    <?php } if( $_SESSION['role_id'] == 4  ){?>
+                    <li><a href="hotel.php">hotel</a></li>
+                    <li><a href="romms.php">romms</a></li>
+                    <li><a href="reservation.php">reservations</a></li>
                     <?php } ?>
                 </ul>
  </aside>

@@ -1,6 +1,6 @@
 <?php  
 include 'header.php';
-if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_id']!=2){
+if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_id']!=2 && $_SESSION['role_id']!=4){
   header('location:../login.php');
 }
 
@@ -72,7 +72,9 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_i
                             <th>location</th>
                             <th>phone</th>
                             <th>amenties</th>
+                            <?php if($_SESSION['role_id']==1 && $_SESSION['role_id']==2){ ?>
                             <th>action</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,7 +199,32 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_i
                       <?php  }?>
 
                     </tbody>
-                    
+                    <?php  if($_SESSION['role_id']==4){ ?>
+                        <tbody>
+                        <?php 
+                        $id=$_SESSION['user_id'];
+                        $sql = "SELECT * FROM hotel NATURAL JOIN localisation  where hotel.responsable_id = $id";
+                        $result = mysqli_query($conn, $sql);   
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <tr>
+
+                            <td>
+                                <p class=""><?=$row['name']?></p>
+                            </td>
+                            <td>
+                                <span class=""><?=$row['pays']?> <?=$row['ville']?></span>
+                            </td>
+                            <td>
+                                <span class=""> <?=$row['contact_number']?></span>
+                            </td>
+                            <td>
+                                <span class=""> <?=$row['amenities']?></span>
+                            </td>
+                           
+                        </tr> <?php }}?>
+
+                      <?php  }?>
                 </table>
 
             </section>

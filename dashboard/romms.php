@@ -1,6 +1,6 @@
 <?php  
 include 'header.php';
-if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2){
+if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2 && $_SESSION['role_id'] != 4){
   header('location:../login.php');
 }
 ?>
@@ -10,7 +10,7 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2){
         <?php include 'aside.php' ?>
 
         <main class="col-md-10 p-3 main-content">
-
+          <?php if($_SESSION['role_id'] == 2){ ?>
             <section class="section dashboard">
               
                 <a type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Room</a>
@@ -164,6 +164,53 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2){
                 </table>
 
             </section>
+            <?php } ?>
+
+            <?php if($_SESSION['role_id']==4){?>
+            <section class="section dashboard">
+              
+
+            
+              <table class="table align-middle mb-0 bg-white shadow ">
+
+                  <thead class="bg-light">
+                      <tr>
+                          <th>Room Number</th>
+                          <th>Room Type</th>
+                          <th>Hotel</th>
+                        
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <?php 
+                      $userId = $_SESSION['user_id'];
+                      $sql = "SELECT *
+                              FROM room_details
+                              JOIN room ON room_details.room_id = room.room_id
+                              JOIN typeroom ON room.roomtype_id = typeroom.roomtype_id
+                              JOIN hotel ON room.hotel_id = hotel.hotel_id
+                              WHERE hotel.responsable_id = $userId";
+
+                      $result = mysqli_query($conn, $sql);
+
+                      if (mysqli_num_rows($result) > 0) {
+                          while ($row = mysqli_fetch_assoc($result)) { ?>
+                              <tr>
+                                  <td><?= $row['room_number'] ?></td>
+                                  <td><?= $row['room_type'] ?></td>
+                                  <td><?= $row['name'] ?></td>
+                                 
+
+                                 
+                  
+              </div>
+                              </tr>
+                      <?php }}?>
+                  </tbody>
+              </table>
+
+          </section>
+          <?php }?>
         </main>
     </div>
 </div>
