@@ -9,7 +9,7 @@ if (isset($_POST["insertroom"])) {
     $price = $_POST["prix"];
     $amentic = $_POST["amentic"];
     
-    $roomId = null; // Initialize $roomId to null
+    $roomId = null; 
 
     $check = "SELECT room_id FROM room WHERE hotel_id = $hotelId AND roomtype_id = $roomTypeId LIMIT 1";
     $result = mysqli_query($conn, $check);

@@ -23,7 +23,7 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=2){
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $sql = "SELECT * FROM users  natural join request where request_id=3 ";
+                        <?php $sql = "SELECT * FROM users  where role_id = 3";
                $result = mysqli_query($conn, $sql);   
                if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) { ?>
@@ -40,16 +40,25 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=2){
                             <td>
                                 <p class="fw-bold mb-1"><?=$row['email']?></p>
                             </td>
+                            <form action="../logique/devenuresponsable.php" method="post">
                             <td>
-                                <span class="badge btn btn-success"><?=$row['request']?></span>
+                              
+                                <input type="hidden" name="user_id" value="<?=$row['user_id']?>">
+                               <select class="form-select" id="hotelId" name="hotelId" required>
+                                            <?php
+                                            $id=$_SESSION['user_id'];
+                                            $hotelSql = "SELECT hotel_id, name FROM hotel where user_id = $id" ;
+                                            $res = mysqli_query($conn, $hotelSql);
+                                            while ($row = mysqli_fetch_assoc($res)) {
+                                                echo "<option value='{$row['hotel_id']}'>{$row['name']}</option>";
+                                            } ?>
+                                        </select>
+                              
                             </td>
                             <td>
-
-                                <a type="button" href="../logique/accepterrequestresponsable.php?id=<?=$row['user_id']?>"
-                                    class="btn btn-success">accepter</a>
-                                <a type="button" href="../logique/refusérequestresponsable.php?id=<?=$row['user_id']?>"
-                                    class="btn btn-danger">refuseé</a>
-                            </td>
+                                <button type="submit"  name="responsable"
+                                    class="btn btn-warning">responsable</button>
+                            </td> </form>
                         </tr> <?php }}?>
                     </tbody>
                 </table>
