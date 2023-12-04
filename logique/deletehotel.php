@@ -6,7 +6,7 @@ if (isset($_GET['deletehotel'])) {
     $locationId = $_GET['deletelocation'];
 
     $sqllocation = "DELETE FROM localisation WHERE location_id = $locationId";
-    $resloca = mysqli_query($conn, $deleteLocation);
+    $resloca = mysqli_query($conn, $sqllocation);
 
     if ($resloca) {
         $sqlhotel = "DELETE FROM hotel WHERE hotel_id = $hotelId";

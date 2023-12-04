@@ -44,9 +44,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="index.php">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="hotels.php">Hotels</a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a class="nav-link" href="romms.php">Rooms</a>
                         </li>

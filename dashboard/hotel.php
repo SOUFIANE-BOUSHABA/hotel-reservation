@@ -98,7 +98,7 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_i
                             </td>
                             <td class="d-flex gap-3">
 
-                            <form action="../logique/deletehotel.php" method="GET" onsubmit="return confirm('Are you sure you want to delete this hotel?')">
+                            <form action="../logique/deletehotel.php" method="GET" >
                                 <input type="hidden" name="deletehotel" value="<?=$row['hotel_id']?>">
                                 <input type="hidden" name="deletelocation" value="<?=$row['location_id']?>">
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -185,8 +185,11 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_i
                                 <span class=""> <?=$row['amenities']?></span>
                             </td>
                             <td>
-
-                                <a type="button" class="btn btn-danger">Supreme</a>
+                            <form action="../logique/deletehotel.php" method="GET" >
+                                <input type="hidden" name="deletehotel" value="<?=$row['hotel_id']?>">
+                                <input type="hidden" name="deletelocation" value="<?=$row['location_id']?>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                               
                             </td>
                         </tr> <?php }}?>
