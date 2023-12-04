@@ -42,7 +42,6 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id'] != 2 && $_SESSION['role
                                         <label for="roomType" class="form-label">Room Type:</label>
                                         <select class="form-select" id="roomType" name="roomType" required>
                                         <?php
-                                            $id=$_SESSION['user_id'];
                                             $typeSql = "SELECT * FROM typeroom " ;
                                             $res = mysqli_query($conn, $typeSql);
                                             while ($row = mysqli_fetch_assoc($res)) {
