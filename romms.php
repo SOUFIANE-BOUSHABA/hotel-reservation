@@ -41,7 +41,7 @@
 
                     
 
-                        $sql = "SELECT room_details.room_number, typeroom.room_type, room.price, room.amenities, hotel.name
+                        $sql = "SELECT room_details.room_detail_id, room_details.room_number, typeroom.room_type, room.price, room.amenities, hotel.name
                                 FROM room_details
                                 INNER JOIN room ON room_details.room_id = room.room_id
                                 INNER JOIN hotel ON room.hotel_id = hotel.hotel_id
