@@ -3,65 +3,6 @@
 
 
 
- 
-if (isset($_POST['checkAv'])) {
-    $room_id =  $_GET['room_id'];
-    $startdate = $_POST["startDate"];
-    $enddate = $_POST["endDate"];
-
-    if (strtotime($startdate) > strtotime($enddate)) {
-        echo "End date should be after start date.";
-        exit;
-    }
-
-    $sql = "SELECT * FROM reservation 
-                           WHERE room_detail_id IN (SELECT room_detail_id FROM room_details WHERE room_detail_id = $room_id) 
-                           AND (('$startdate' BETWEEN start_date AND end_date) OR ('$enddate' BETWEEN start_date AND end_date))";
-
-    $res = mysqli_query($conn, $sql);
-
-    if ($res) {
-        if (mysqli_num_rows($res) < 1) {
-            echo "<script>
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-start',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'room is avilable in this date'
-                    });
-             </script>";
-        } else {
-            echo "<script>
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-start',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: 'warning',
-                            title: 'sorry, rom not avilable'
-                        });
-             </script>";
-        }
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
-}
 
 
 
@@ -153,7 +94,9 @@ if (isset($_POST['book'])) {
     }
 }
 ?>
+<p id="test">
 
+</p>
 <div class="container">
     <div class="row">
 
@@ -162,7 +105,7 @@ if (isset($_POST['book'])) {
                 <div style="height:70px"></div>
                 <h4>Check Availability</h4>
 
-                <form class="mb-3" method="post" action="">
+                <form class="mb-3" method="post" action="" id="form">
                     <input type="hidden" name="room_id" value="<?php echo $roomId; ?>">
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Start Date</label>
@@ -172,10 +115,58 @@ if (isset($_POST['book'])) {
                         <label for="endDate" class="form-label">End Date</label>
                         <input type="date" class="form-control" name="endDate" required>
                     </div>
-                    <button type="submit" name="checkAv" class="btn btn-primary">Check Availability</button>
+                    <button  name="checkAv" class="btn btn-primary">Check Availability</button>
                 </form>
             </div>
         </div>
+       
+        <script>
+var form = document.getElementById('form');
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var formData = new FormData(form);
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'test.php', true);
+
+    xhr.onload = function () {
+        var response = JSON.parse(xhr.responseText);
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-start',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        if (response.status === 'success') {
+            Toast.fire({
+                icon: 'success',
+                title: response.message
+            });
+        } else if (response.status === 'warning') {
+            Toast.fire({
+                icon: 'warning',
+                title: response.message
+            });
+        } else {
+            Toast.fire({
+                icon: 'error',
+                title: response.message
+            });
+        }
+    };
+
+    xhr.send(formData);
+});
+
+
+        </script>
 
         <div class="col-md-9">
             <h2 class="text-center mb-4">Room Details</h2>
@@ -225,9 +216,10 @@ if (isset($_POST['book'])) {
 
                                                         <h4>periode</h4>
 
-                                                        <form class="mb-3" method="post" >
-                                                            <input type="hidden" name="room_id"  value="<?= $roomId; ?>">
-                                                            <input type="hidden" name="price" value="<?= $row["price"] ?>" >
+                                                        <form class="mb-3" method="post">
+                                                            <input type="hidden" name="room_id" value="<?= $roomId; ?>">
+                                                            <input type="hidden" name="price"
+                                                                value="<?= $row["price"] ?>">
                                                             <div class="mb-3">
                                                                 <label for="startDate" class="form-label">Start
                                                                     Date</label>

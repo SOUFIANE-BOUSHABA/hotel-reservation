@@ -186,13 +186,7 @@ if(!isset($_SESSION['role_id']) ||  $_SESSION['role_id']!=1 && $_SESSION['role_i
                             <td>
                                 <span class=""> <?=$row['amenities']?></span>
                             </td>
-                            <td>
-                            <form action="../logique/deletehotel.php" method="GET" >
-                                <input type="hidden" name="deletehotel" value="<?=$row['hotel_id']?>">
-                                <input type="hidden" name="deletelocation" value="<?=$row['location_id']?>">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                              
+                           
                             </td>
                         </tr> <?php }}?>
 
